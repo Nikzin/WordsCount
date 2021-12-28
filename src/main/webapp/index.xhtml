@@ -15,28 +15,55 @@
 
     <h:body>
 
-
-        <p>Sorting of words by encounter in a text file:</p>
+        <p>Sorting of words by encounter in a text files:</p>
         <h:form enctype="multipart/form-data">
+            <h:outputLabel value="Or type sub-directory for C:/Users/UserName/Desktop/Typing/ "/>
+            <h:inputText id="directory" value="#{countService.directory}"  />
 
-            <h:inputFile id="wordlist" value="#{bean1.file2}" required="true"/>
-            <br></br>
-            <br></br>
-            <h:outputLabel value="Choose your file text encoding: default encoding is UTF8 (if nothing chosen) "/>
+            <br></br><br></br>
+            <h:outputLabel value="Upload a file from disk "/>
+            <h:inputFile id="wordlist" value="#{countService.part2}" />
+            <h:outputLabel value="Encoding: default UTF8 "/>
+            <h:inputText id="encoding" value="#{countService.encoding2}"  />
+
+            <br></br><br></br>
+            <h:outputLabel value=" Save to file "/>
+            <h:inputText id="fileNameSafeTo" value="#{countService.fileNameSafeTo}"  />
+            <br></br><br></br>
+            <p:outputLabel value=" Files to save: "/>
 
 
+            <p>
+                <h:selectBooleanCheckbox value="#{countService.wordListWithCapsBox}"/>
+                <h:outputLabel value=" Capital letters "/>
+            </p>
 
-           <h:inputText id="encoding" value="#{bean1.encoding2}"  />
-            <br></br>
-            <br></br>
-            <h:commandButton value="Generate word list and frequencies, sorted" action="#{bean1.printWordsToPage}"/>
+            <p>
+                <h:selectBooleanCheckbox value="#{countService.wordListWithNumbersBox}"/>
+                <h:outputLabel value=" Random numbers "/>
+            </p>
+
+            <p>
+                <h:selectBooleanCheckbox value="#{countService.wordListWithSpecials1Box}"/>
+                <h:outputLabel value=" Special characters set 1 "/>
+            </p>
+
+            <p>
+                <h:selectBooleanCheckbox value="#{countService.wordListWithSpecials2Box}"/>
+                <h:outputLabel value=" Special characters set 2 "/>
+            </p>
+
+            <h:commandButton value="Generate word list and frequencies, sorted" action="#{countService.printWordsToPage}"/>
         </h:form>
 
+        <br></br> <br></br>
+
+        <button type="submit" onclick="window.open('text1.txt')">Download!</button>
+        <a href="text1.txt" download="text1.txt">Download</a>
+        <br></br>
+        <br></br>
         <p>List of words and their encounter:</p>
-        <h:outputText value="#{bean1.getMessage4()}" escape="false" />
-
-
-
+        <h:outputText value="#{countService.wordsOutHtml}" escape="false" />
 
     </h:body>
 </f:view>

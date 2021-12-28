@@ -1,9 +1,9 @@
-package beans;
+package Words;
 
 
 public class WordAndCount {
     private String word;
-    private int count;
+    private Integer count;
 
 
     public String getWord() {
@@ -14,15 +14,15 @@ public class WordAndCount {
         this.word = word;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
-    public WordAndCount(String word, int count) {
+    public WordAndCount(String word, Integer count) {
         this.word = word;
         this.count = count;
     }

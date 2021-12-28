@@ -1,4 +1,4 @@
-package beans;
+package Words;
 
 
 import java.util.ArrayList;

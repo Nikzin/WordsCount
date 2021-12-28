@@ -1,13 +1,10 @@
 package service;
 
 
-import beans.WordAndCount;
+import Words.WordAndCount;
 
 import javax.servlet.http.Part;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Frequences {
@@ -24,75 +21,59 @@ public class Frequences {
         }
         if (!inList) {words1.add (new WordAndCount(word1, 1)); }//
     }
+    public ArrayList <WordAndCount>  wordsWhiteSpaces (Part file, String encoding) throws IOException {
+        InputStream input = file.getInputStream();
+        return getWords (input, encoding);
+    }
 
-    public ArrayList <WordAndCount>  wordsWhiteSpaces (Part file, String encoding) {
+    public ArrayList <WordAndCount>  wordsWhiteSpaces (File file, String encoding) throws IOException {
+        InputStream input = new FileInputStream(file);
+        return getWords (input, encoding);
+    }
+
+    public ArrayList <WordAndCount>  getWords ( InputStream input, String encoding) throws IOException {
         ArrayList <WordAndCount> words = new ArrayList<WordAndCount>();
-        System.out.println("Encoding "+encoding+" whatever");
-if ((encoding == null) || (encoding.length()<1)) {encoding="UTF8";}
-        //encoding="UTF8";
-            try {
-                InputStream input = file.getInputStream();
-              // BufferedReader br = new BufferedReader(new InputStreamReader(input, "UTF8" ));
-               // BufferedReader br = new BufferedReader(new InputStreamReader(input, "UTF-16LE" ));
+        //System.out.println("Encoding "+encoding+" whatever");
+
+        if ((encoding == null) || (encoding.length()<1)) {encoding="UTF8";}
+
+
+
+
                 BufferedReader br = new BufferedReader(new InputStreamReader(input, encoding));
 
-              //  BufferedReader br = new BufferedReader(new InputStreamReader(input));
-
-            String line;
+                String line;
 
             while ((line = br.readLine()) != null) {
             //    line=line.replaceAll("([A-Z])", "").toLowerCase();
                 line=line.toLowerCase();
-                String[] arr = line.split("[\\s,.()?;!:;\"]+");
-
-
-                //"[^A-Za-zа-яöäå]" check if real word letters somehow
+                String[] arr = line.split("[\\s,.\\|()?;!:;\"]+");
 
                 for ( String ss : arr) {
-                    //if(!(ss.contains("[^A-Za-zа-яöäå]")))
-                    if((ss.matches(".*[^a-zа-яåöä].*"))||(ss.length()<1))
-
-                    {
-                       // System.out.println("special "+ss);
-                    }
-                    else
-                    {
+                    //this regex means: not contain any other letter apart of a-zа-яöäå
+                    if(ss.matches("[a-zа-яåöäZ]+")){
+                       // ss = ss.substring(0, 1).toUpperCase() + ss.substring(1); // temporal capitalize all words
                         addWord(words, ss);
-                     //   System.out.println(ss);
-                    }
-
-
-                }
-            }
-
-            /*
-        //another way to sort the words with TreeMap
-           TreeMap<String, Integer> myMap  = new TreeMap <String, Integer> ();
-           while ((line = br.readLine()) != null) {
-                String[] arr = line.split("[\\s,;!:;\"]+");
-                //"[^A-Za-z0-9]" check if real word letters somehow
-
-                for ( String ss : arr) {
-
-                    if(myMap.get(ss) == null) {
-                        myMap.put(ss, 1);
-                    }
-                    else {
-                        myMap.put(ss, (myMap.get(ss))+1);
                     }
                 }
             }
-            for(Map.Entry<String,Integer> entry : myMap.entrySet()) {
-                String key = entry.getKey();
-                Integer value = entry.getValue();
-                words.add(new WordAndCount(key, value));
+
+            return words;
+    }
+
+    public ArrayList <WordAndCount>  getWords ( String text)  {
+        ArrayList <WordAndCount> words = new ArrayList<WordAndCount>();
+        String encoding="UTF8";
+            text=text.toLowerCase();
+            String[] arr = text.split("[\\s,.\\|()?;!:;\"]+");
+            for ( String ss : arr) {
+                //this regex means: not contain any other letter apart of a-zа-яöäå
+                if(ss.matches("[a-zа-яåöäZ]+")){
+                 //   ss = ss.substring(0, 1).toUpperCase() + ss.substring(1); // temporal capitalize all words
+                    addWord(words, ss);
+                }
             }
-            */
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return words;
+            return words;
     }
 
 

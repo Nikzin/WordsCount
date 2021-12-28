@@ -34,12 +34,17 @@
 <dependencies>
 
 
+
+
+
     <dependency>
         <groupId>javax.faces</groupId>
         <artifactId>javax.faces-api</artifactId>
         <version>2.2</version>
         <scope>provided</scope>
     </dependency>
+
+
 
     <dependency>
         <groupId>com.sun.faces</groupId>
@@ -75,7 +80,17 @@
         <version>3.1.0</version>
     </dependency>
 
-
+<!--    <dependency>
+        <groupId>org.omnifaces</groupId>
+        <artifactId>omnifaces</artifactId>
+        <version> 2.7.12</version>
+    </dependency>-->
+<!--    <dependency>
+        <groupId>javax.enterprise</groupId>
+        <artifactId>cdi-api</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+    </dependency>-->
 
 </dependencies>
 
